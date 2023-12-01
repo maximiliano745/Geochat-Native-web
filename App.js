@@ -43,8 +43,8 @@ const App = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw', backgroundColor: '#72bcd4' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '25%' }}>
+    <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', height: '100vh', width: '100vw', backgroundColor: '#72bcd4' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '25%', marginLeft: '25%' }}>
         <div onClick={() => console.log('Ir a Registro')} style={{ marginBottom: 20 }}>
           <span style={{ fontSize: '24px' }}>Login</span>
         </div>
