@@ -1,14 +1,45 @@
 import React, { useState } from 'react';
+import Servicios from './Servicios';
 
 const App = () => {
+
+  const [isLoading, setIsLoading] = useState(false);
   const [inputValues, setInputValues] = useState({ email: '', password: '' });
 
-  const handleChange = (fieldName, text) => {
-    setInputValues({ ...inputValues, [fieldName]: text });
+  const handleChange = (fieldName, value) => {
+    setInputValues({ ...inputValues, [fieldName]: value });
+    // Puedes hacer algo con 'value' o el evento 'e' aquí si es necesario
   };
+  
 
-  const handleSubmit = () => {
-    // Lógica para enviar datos o realizar alguna acción al presionar "Enviar"
+  const handleSubmit = async (e) => {
+      try {
+      e.preventDefault();
+      setIsLoading(true);
+      const resp = await Servicios.login(inputValues.email, inputValues.password);
+      console.log("Respuesta del login: ", resp.message);
+
+      if (resp.message === 'OK!!, Email EXISTENTE....!!!') {
+        alert("Acceso Concedido....!!!!");
+        console.log("Inicio de sesión exitoso");
+        //onLogin();
+        localStorage.setItem('email', inputValues.email);
+        localStorage.setItem('id', resp.id);
+        localStorage.setItem('nombre', resp.name);
+        //navigate('/mapa');
+        return resp.data;
+      } else {
+        setIsLoading(false);
+        alert(resp.message)
+        console.log("Error en la solicitud:" + resp);
+        return null;
+      }
+
+
+    } catch (error) {
+      alert(error);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -28,7 +59,7 @@ const App = () => {
             <input
               name="email"
               value={inputValues.email}
-              onChange={e => handleChange('email', e.target.value)}
+              onChange={(e) => handleChange('email', e.target.value)}
               placeholder="Email"
               style={{ flex: 1, padding: 10, border: 'none' }}
             />
@@ -39,7 +70,7 @@ const App = () => {
             <input
               name="password"
               value={inputValues.password}
-              onChange={e => handleChange('password', e.target.value)}
+              onChange={(e) => handleChange('password', e.target.value)}
               placeholder="Password"
               type="password"
               style={{ flex: 1, padding: 10, border: 'none' }}
@@ -47,7 +78,7 @@ const App = () => {
           </div>
         </div>
 
-        <div onClick={handleSubmit} style={{ width: '100%', backgroundColor: 'blue', padding: 10, borderRadius: 5, alignItems: 'center', textAlign: 'center' }}>
+        <div onClick={(e) => handleSubmit(e)} style={{ width: '100%', backgroundColor: 'blue', padding: 10, borderRadius: 5, alignItems: 'center', textAlign: 'center' }}>
           <span style={{ color: 'white' }}>Enviar</span>
         </div>
 
