@@ -54,7 +54,7 @@ const App = () => {
         </div>
 
         <div style={{ width: '100%', marginBottom: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', border: '1px solid', borderRadius: 5 }}>
+          <div style={{ display: 'flex', alignItems: 'alignItems', border: '1px solid', borderRadius: 5 }}>
             <img src={require('./imagenes/account.png')} alt="icono cuenta" style={{ width: 20, height: 20, margin: 5 }} />
             <input
               name="email"
@@ -65,7 +65,7 @@ const App = () => {
             />
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', border: '1px solid', borderRadius: 5, marginTop: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'alignItems', border: '1px solid', borderRadius: 5, marginTop: 10 }}>
             <img src={require('./imagenes/password.png')} alt="icono contraseña" style={{ width: 20, height: 20, margin: 5 }} />
             <input
               name="password"
