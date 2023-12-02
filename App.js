@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Servicios from './Servicios';
+import { PropagateLoader } from 'react-spinners';
 
 const App = () => {
 
@@ -45,6 +46,11 @@ const App = () => {
   return (
     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', height: '100vh', width: '100vw', backgroundColor: '#72bcd4' }}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '25%', marginLeft: '25%' }}>
+      {isLoading && (
+        <div className="spinner-container">
+          <PropagateLoader color="#010c0a" />
+        </div>
+      )}
         <div onClick={() => console.log('Ir a Registro')} style={{ marginBottom: 20 }}>
           <span style={{ fontSize: '24px' }}>Login</span>
         </div>
