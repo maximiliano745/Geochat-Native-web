@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Servicios from '../Servicios';
 import { PropagateLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [inputValues, setInputValues] = useState({ email: '', password: '' });
@@ -29,8 +31,8 @@ const Login = () => {
         localStorage.setItem('email', inputValues.email);
         localStorage.setItem('id', resp.id);
         localStorage.setItem('nombre', resp.name);
-        //navigate('/mapa');
-        setIsLoading(false);
+        navigate('/mapa');
+        setIsLoading(true);
         return resp.data;
       } else {
         setIsLoading(false);
