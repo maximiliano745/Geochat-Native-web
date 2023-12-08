@@ -30,9 +30,7 @@ const Register = () => {
                 alert(resp)
                 if (resp !== '{"Error Email EXISTENTE....!!!"}') {
                     localStorage.setItem("email", inputValues.email)
-                    //navigate('/App');
                 }
-
             }
         } catch (error) {
             setIsLoading(false);
