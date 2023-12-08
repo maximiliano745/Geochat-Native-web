@@ -12,8 +12,8 @@ const Mapa = () => {
     lat= -34.8874779;
   return (
     <div>
-    <h3>Mis Lugares</h3>
-    <MapContainer style={{ height: "100%", width: "100%" }} center={[lat, lon]} zoom={6}>
+      <h3 style={{display: 'flex', justifyContent: 'center'}}>Mis Lugares</h3>
+      <MapContainer style={{ height: "90%", width: "1340px" }} center={[lat, lon]} zoom={6}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
