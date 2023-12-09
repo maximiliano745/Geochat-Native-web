@@ -43,13 +43,13 @@ const Mapa = () => {
     };
 
     setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
-    alert(`${newIcon.icon.type.name} fue soltado en (${newIcon.x}, ${newIcon.y}) con el icono: (${newIcon.icon.type.name})`);
+    //alert(`${newIcon.icon.type.name} fue soltado en (${newIcon.x}, ${newIcon.y}) con el icono: (${newIcon.icon.type.name})`);
   };
 
   return (
     <div>
       <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3>
-      <MapContainer style={{ height: "90%", width: "1300px" }} center={[lat, lon]} zoom={10}>
+      <MapContainer style={{ height: "90%", width: "1300px" }} center={[lat, lon]} zoom={12}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -60,7 +60,7 @@ const Mapa = () => {
           <div
             style={{ ...iconContainerStyle, top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}
             draggable
-            onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={30} style={{ color: 'red', margin: '5px' }} />)}
+            onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
           >
             <AiFillWarning size={30} style={{ color: 'red', margin: '5px' }} />
           </div>
@@ -70,7 +70,7 @@ const Mapa = () => {
           <div
             style={{ ...iconContainerStyle, top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}
             draggable
-            onDragEndCapture={(event) => handleDrop(event, <IoWarningOutline size={30} style={{ color: 'yellow', margin: '5px' }} />)}
+            onDragEndCapture={(event) => handleDrop(event, <IoWarningOutline size={35} style={{ color: 'yellow', margin: '5px' }} />)}
           >
             <IoWarningOutline size={30} style={{ color: 'yellow', margin: '5px' }} />
           </div>
