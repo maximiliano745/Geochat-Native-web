@@ -7,7 +7,7 @@ import FormDialog from './FormularioDialog';
 
 const Mapa = () => {
 
-  const [iconCoords, setIconCoords] = useState({ x: 0, y: 0 });
+  const [iconCoords, setIconCoords] = useState({ x: 0, y: -100 });
   const [droppedIcons, setDroppedIcons] = useState([]);
   const [showDialog, setShowDialog] = useState(false); // Estado para mostrar el diálogo
 
@@ -58,7 +58,7 @@ const Mapa = () => {
       {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
 
       <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3>
-      <MapContainer style={{ height: "90%", width: "1300px" }} center={[lat, lon]} zoom={16}>
+      <MapContainer style={{ height: "90%", width: "200vh" }} center={[lat, lon]} zoom={16}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
