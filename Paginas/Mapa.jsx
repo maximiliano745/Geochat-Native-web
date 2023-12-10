@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
+import { View } from 'react-native';
 import { AiFillWarning } from "react-icons/ai";
 // import { IoWarningOutline } from "react-icons/io5";
 import FormDialog from './FormularioDialog';
@@ -61,8 +62,11 @@ const Mapa = () => {
       {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
 
       {/* <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3> */}
-      <h3 style={{ textAlign: 'center' }}>Mi MAPA</h3>
-      <MapContainer style={{ height: "90%", width: "210vh" }} center={[lat, lon]} zoom={16}>
+      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <h3>Mi MAPA</h3> 
+      </View>
+      {/* <h3 style={{ textAlign: 'center' }}>Mi MAPA</h3> */}
+      <MapContainer style={{ height: "90%", width: "100vh" }} center={[lat, lon]} zoom={16}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
