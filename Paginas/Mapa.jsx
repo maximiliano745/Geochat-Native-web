@@ -25,12 +25,10 @@ const Mapa = () => {
 
   const iconsStyle = {
     position: 'fixed',
-    top: '50%',
+    top: '10px', // Mueve los iconos hacia la parte superior
     right: '10px',
-    transform: 'translateY(-50%)',
     zIndex: 100,
     display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
   };
 
@@ -58,7 +56,7 @@ const Mapa = () => {
       {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
 
       <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3>
-      <MapContainer style={{ height: "90%", width: "200vh" }} center={[lat, lon]} zoom={16}>
+      <MapContainer style={{ height: "90%", width: "1350px" }} center={[lat, lon]} zoom={16}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
