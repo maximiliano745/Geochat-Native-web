@@ -55,8 +55,9 @@ const Mapa = () => {
       {/* Mostrar el diálogo FormDialog cuando showDialog es true */}
       {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
 
-      <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3>
-      <MapContainer style={{ height: "90%", width: "1350px" }} center={[lat, lon]} zoom={16}>
+      {/* <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3> */}
+      <h3 style={{ textAlign: 'center' }}>Mis Lugares</h3>
+      <MapContainer style={{ height: "90%", width: "210vh" }} center={[lat, lon]} zoom={16}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
