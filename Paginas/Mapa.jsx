@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import { AiFillWarning } from "react-icons/ai";
-import { IoWarningOutline } from "react-icons/io5";
+// import { IoWarningOutline } from "react-icons/io5";
 import FormDialog from './FormularioDialog';
+import { TiHome } from "react-icons/ti";
 
 const Mapa = () => {
 
@@ -38,10 +39,14 @@ const Mapa = () => {
   };
 
   const handleDrop = (event, draggedIcon) => {
+
+    const touch = event.touches[0];
     const newIcon = {
       icon: draggedIcon,
-      x: event.clientX,
-      y: event.clientY,
+      // x: event.clientX,
+      // y: event.clientY,
+      x: touch.clientX,
+      y: touch.clientY,
     };
 
     setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
@@ -56,7 +61,7 @@ const Mapa = () => {
       {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
 
       {/* <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3> */}
-      <h3 style={{ textAlign: 'center' }}>Mis Lugares</h3>
+      <h3 style={{ textAlign: 'center' }}>Mi MAPA</h3>
       <MapContainer style={{ height: "90%", width: "210vh" }} center={[lat, lon]} zoom={16}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -67,8 +72,11 @@ const Mapa = () => {
         <div style={{ top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}>
           <div
             style={{ ...iconContainerStyle, top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}
-            draggable
-            onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
+            //draggable
+            //onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
+            onTouchStart={(event) => handleTouchStart(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
+            onTouchMove={(event) => handleTouchMove(event)}
+            //style={{ ...iconContainerStyle }}
           >
             <AiFillWarning size={30} style={{ color: 'red', margin: '5px' }} />
           </div>
@@ -77,10 +85,12 @@ const Mapa = () => {
         <div style={{ top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}>
           <div
             style={{ ...iconContainerStyle, top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}
-            draggable
-            onDragEndCapture={(event) => handleDrop(event, <IoWarningOutline size={35} style={{ color: 'yellow', margin: '5px' }} />)}
+            //draggable
+            //onDragEndCapture={(event) => handleDrop(event, <TiHome size={35} style={{ color: 'black', margin: '5px' }} />)}
+            onTouchStart={(event) => handleTouchStart(event, <TiHome size={35} style={{ color: 'black', margin: '5px' }} />)}
+            onTouchMove={(event) => handleTouchMove(event)}
           >
-            <IoWarningOutline size={30} style={{ color: 'yellow', margin: '5px' }} />
+            <TiHome size={30} style={{ color: 'black', margin: '5px' }} />
           </div>
         </div>
       </div>
