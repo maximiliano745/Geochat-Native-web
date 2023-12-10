@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { AiFillWarning } from "react-icons/ai";
 // import { IoWarningOutline } from "react-icons/io5";
 import FormDialog from './FormularioDialog';
@@ -12,6 +12,8 @@ const Mapa = () => {
   const [iconCoords, setIconCoords] = useState({ x: 0, y: -100 });
   const [droppedIcons, setDroppedIcons] = useState([]);
   const [showDialog, setShowDialog] = useState(false); // Estado para mostrar el diálogo
+
+  const { width: deviceWidth } = Dimensions.get('window');
 
 
   let lon = -57.9023753;
@@ -62,15 +64,16 @@ const Mapa = () => {
       {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
 
       {/* <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3> */}
-      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <h3>Mi MAPA</h3> 
-      </View>
-      {/* <h3 style={{ textAlign: 'center' }}>Mi MAPA</h3> */}
-      <MapContainer style={{ height: "90%", width: "40vh" }} center={[lat, lon]} zoom={16}>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      </MapContainer>
+      {/* <View style={{ flex: 1 }}> */}
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <h3>Mi MAPA</h3>
+        </View>
+        <MapContainer style={{ height: "90%", width: deviceWidth }} center={[lat, lon]} zoom={16}>
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        </MapContainer>
+      {/* </View> */}
 
       <div style={iconsStyle}>
         <div style={{ top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}>
@@ -80,7 +83,7 @@ const Mapa = () => {
             //onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
             onTouchStart={(event) => handleTouchStart(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
             onTouchMove={(event) => handleTouchMove(event)}
-            //style={{ ...iconContainerStyle }}
+          //style={{ ...iconContainerStyle }}
           >
             <AiFillWarning size={30} style={{ color: 'red', margin: '5px' }} />
           </div>
@@ -115,8 +118,8 @@ const Mapa = () => {
         </div>
       ))}
 
-          
-      
+
+
 
     </div>
   )
