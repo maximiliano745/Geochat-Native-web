@@ -66,7 +66,7 @@ const Mapa = () => {
         <h3>Mi MAPA</h3> 
       </View>
       {/* <h3 style={{ textAlign: 'center' }}>Mi MAPA</h3> */}
-      <MapContainer style={{ height: "90%", width: "90vh" }} center={[lat, lon]} zoom={16}>
+      <MapContainer style={{ height: "90%", width: "70vh" }} center={[lat, lon]} zoom={16}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
