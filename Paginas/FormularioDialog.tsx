@@ -21,7 +21,7 @@ export default function FormDialog({ open: showDialog, onClose }) {
 
   return (
     <Dialog open={openDialog} onClose={handleClose}>
-      <DialogTitle>Subscribe</DialogTitle>
+      <DialogTitle>Confirmacion</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Ingrese la descrpción del ICONO:
@@ -37,8 +37,8 @@ export default function FormDialog({ open: showDialog, onClose }) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Subscribe</Button>
+        <Button onClick={handleClose}>Cancela</Button>
+        <Button onClick={handleClose}>Confirma</Button>
       </DialogActions>
     </Dialog>
   );
