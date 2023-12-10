@@ -24,7 +24,7 @@ export default function FormDialog({ open: showDialog, onClose }) {
       <DialogTitle>Subscribe</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Ingrese la descrpción de la ALERTA:
+          Ingrese la descrpción del ICONO:
         </DialogContentText>
         <TextField
           autoFocus

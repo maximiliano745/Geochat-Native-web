@@ -41,68 +41,74 @@ const Mapa = () => {
     cursor: 'move',
   };
 
-    //const handleDrop = (event, draggedIcon) => {
-      const handleTouchStart = (event, draggedIcon) => {
-        const touch = event.touches[0];
-        const newIcon = {
-          icon: draggedIcon,
+  const handleDrop = (event, draggedIcon) => {
+    const newIcon = {
+      icon: draggedIcon,
+      x: event.clientX,
+      y: event.clientY,
+      //description: description,
+    };
+
+    setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
+    setShowDialog(true); // Mostrar el diálogo al soltar el ícono
+  };
+  const handleTouchStart = (event, draggedIcon) => {
+    const touch = event.touches[0];
+    const newIcon = {
+      icon: draggedIcon,
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+
+    setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
+  };
+
+  const handleTouchMove = (event) => {
+    event.preventDefault(); // Evita el comportamiento predeterminado del desplazamiento en dispositivos táctiles
+
+    const touch = event.touches[0];
+    const updatedIcons = droppedIcons.map((icon, index) => {
+      if (index === droppedIcons.length - 1) { // Actualiza la última posición del ícono mientras se mueve
+        return {
+          ...icon,
           x: touch.clientX,
           y: touch.clientY,
         };
-      
-        setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
-      };
+      }
+      return icon;
+    });
 
-      const handleTouchMove = (event) => {
-        event.preventDefault(); // Evita el comportamiento predeterminado del desplazamiento en dispositivos táctiles
-      
-        const touch = event.touches[0];
-        const updatedIcons = droppedIcons.map((icon, index) => {
-          if (index === droppedIcons.length - 1) { // Actualiza la última posición del ícono mientras se mueve
-            return {
-              ...icon,
-              x: touch.clientX,
-              y: touch.clientY,
-            };
-          }
-          return icon;
-        });
-      
-        setDroppedIcons(updatedIcons);
-      }; 
+    setDroppedIcons(updatedIcons);
+  };
 
-      const handleTouchEnd = () => {
-        setShowDialog(true); // Mostrar el cuadro de diálogo al soltar el ícono
-      };
+  const handleTouchEnd = () => {
+    setShowDialog(true); // Mostrar el cuadro de diálogo al soltar el ícono
+  };
 
   return (
     <div>
       {/* Mostrar el diálogo FormDialog cuando showDialog es true */}
       {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
 
-      {/* <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3> */}
-      {/* <View style={{ flex: 1 }}> */}
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <h3>Mi MAPA</h3>
-        </View>
-        <MapContainer style={{ height: "90%", width: deviceWidth }} center={[lat, lon]} zoom={16}>
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        </MapContainer>
-      {/* </View> */}
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <h3>Mi MAPA</h3>
+      </View>
+      <MapContainer style={{ height: "90%", width: deviceWidth }} center={[lat, lon]} zoom={16}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      </MapContainer>
 
       <div style={iconsStyle}>
         <div style={{ top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}>
           <div
             style={{ ...iconContainerStyle, top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}
-            //draggable
-            //onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
+            draggable
+            onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
             onTouchStart={(event) => handleTouchStart(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
             onTouchMove={(event) => handleTouchMove(event)}
             onTouchEnd={() => handleTouchEnd()} // Agrega esto para manejar el final del toque
 
-          //style={{ ...iconContainerStyle }}
           >
             <AiFillWarning size={30} style={{ color: 'red', margin: '5px' }} />
           </div>
@@ -111,8 +117,8 @@ const Mapa = () => {
         <div style={{ top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}>
           <div
             style={{ ...iconContainerStyle, top: `${iconCoords.y}px`, right: `${window.innerWidth - iconCoords.x}px` }}
-            //draggable
-            //onDragEndCapture={(event) => handleDrop(event, <TiHome size={35} style={{ color: 'black', margin: '5px' }} />)}
+            draggable
+            onDragEndCapture={(event) => handleDrop(event, <TiHome size={35} style={{ color: 'black', margin: '5px' }} />)}
             onTouchStart={(event) => handleTouchStart(event, <TiHome size={35} style={{ color: 'black', margin: '5px' }} />)}
             onTouchMove={(event) => handleTouchMove(event)}
             onTouchEnd={() => handleTouchEnd()} // Agrega esto para manejar el final del toque
@@ -138,9 +144,6 @@ const Mapa = () => {
           {icon.icon}
         </div>
       ))}
-
-
-
 
     </div>
   )
