@@ -10,7 +10,10 @@
     "build": "npx expo build:web"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@expo/webpack-config": "^19.0.0",
+    "@mui/material": "^5.14.20",
     "@react-navigation/native": "^6.1.9",
     "axios": "^1.6.2",
     "expo": "^49.0.21",

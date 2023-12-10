@@ -3,10 +3,14 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import { AiFillWarning } from "react-icons/ai";
 import { IoWarningOutline } from "react-icons/io5";
+import FormDialog from './FormularioDialog';
 
 const Mapa = () => {
+
   const [iconCoords, setIconCoords] = useState({ x: 0, y: 0 });
   const [droppedIcons, setDroppedIcons] = useState([]);
+  const [showDialog, setShowDialog] = useState(false); // Estado para mostrar el diálogo
+
 
   let lon = -57.9023753;
   let lat = -34.8874779;
@@ -44,12 +48,17 @@ const Mapa = () => {
 
     setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
     //alert(`${newIcon.icon.type.name} fue soltado en (${newIcon.x}, ${newIcon.y}) con el icono: (${newIcon.icon.type.name})`);
+    setShowDialog(true); // Mostrar el diálogo al soltar el ícono
+    //alert(showDialog);
   };
 
   return (
     <div>
+      {/* Mostrar el diálogo FormDialog cuando showDialog es true */}
+      {showDialog && <FormDialog open={showDialog} onClose={() => setShowDialog(false)} />}
+
       <h3 style={{ display: 'flex', justifyContent: 'center' }}>Mis Lugares</h3>
-      <MapContainer style={{ height: "90%", width: "1300px" }} center={[lat, lon]} zoom={12}>
+      <MapContainer style={{ height: "90%", width: "1300px" }} center={[lat, lon]} zoom={16}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -92,6 +101,10 @@ const Mapa = () => {
           {icon.icon}
         </div>
       ))}
+
+          
+      
+
     </div>
   )
 }
