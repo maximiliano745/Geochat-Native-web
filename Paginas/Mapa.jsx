@@ -42,27 +42,38 @@ const Mapa = () => {
   };
 
     //const handleDrop = (event, draggedIcon) => {
-    const handleTouchStart = (event, draggedIcon) => {
+      const handleTouchStart = (event, draggedIcon) => {
+        const touch = event.touches[0];
+        const newIcon = {
+          icon: draggedIcon,
+          x: touch.clientX,
+          y: touch.clientY,
+        };
+      
+        setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
+      };
 
-    const touch = event.touches[0];
-    const newIcon = {
-      icon: draggedIcon,
-      // x: event.clientX,
-      // y: event.clientY,
-      x: touch.clientX,
-      y: touch.clientY,
-    };
+      const handleTouchMove = (event) => {
+        event.preventDefault(); // Evita el comportamiento predeterminado del desplazamiento en dispositivos táctiles
+      
+        const touch = event.touches[0];
+        const updatedIcons = droppedIcons.map((icon, index) => {
+          if (index === droppedIcons.length - 1) { // Actualiza la última posición del ícono mientras se mueve
+            return {
+              ...icon,
+              x: touch.clientX,
+              y: touch.clientY,
+            };
+          }
+          return icon;
+        });
+      
+        setDroppedIcons(updatedIcons);
+      }; 
 
-    setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
-    //alert(`${newIcon.icon.type.name} fue soltado en (${newIcon.x}, ${newIcon.y}) con el icono: (${newIcon.icon.type.name})`);
-    setShowDialog(true); // Mostrar el diálogo al soltar el ícono
-    //alert(showDialog);
-  };
-
-  const handleTouchMove = (event) => {
-    event.preventDefault(); // Evita el comportamiento predeterminado del desplazamiento en dispositivos táctiles
-    // Puedes implementar lógica adicional si deseas realizar acciones mientras el ícono se mueve
-  };
+      const handleTouchEnd = () => {
+        setShowDialog(true); // Mostrar el cuadro de diálogo al soltar el ícono
+      };
 
   return (
     <div>
@@ -89,6 +100,8 @@ const Mapa = () => {
             //onDragEndCapture={(event) => handleDrop(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
             onTouchStart={(event) => handleTouchStart(event, <AiFillWarning size={35} style={{ color: 'red', margin: '5px' }} />)}
             onTouchMove={(event) => handleTouchMove(event)}
+            onTouchEnd={() => handleTouchEnd()} // Agrega esto para manejar el final del toque
+
           //style={{ ...iconContainerStyle }}
           >
             <AiFillWarning size={30} style={{ color: 'red', margin: '5px' }} />
@@ -102,6 +115,8 @@ const Mapa = () => {
             //onDragEndCapture={(event) => handleDrop(event, <TiHome size={35} style={{ color: 'black', margin: '5px' }} />)}
             onTouchStart={(event) => handleTouchStart(event, <TiHome size={35} style={{ color: 'black', margin: '5px' }} />)}
             onTouchMove={(event) => handleTouchMove(event)}
+            onTouchEnd={() => handleTouchEnd()} // Agrega esto para manejar el final del toque
+
           >
             <TiHome size={30} style={{ color: 'black', margin: '5px' }} />
           </div>
