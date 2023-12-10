@@ -41,7 +41,8 @@ const Mapa = () => {
     cursor: 'move',
   };
 
-  const handleDrop = (event, draggedIcon) => {
+    //const handleDrop = (event, draggedIcon) => {
+    const handleTouchStart = (event, draggedIcon) => {
 
     const touch = event.touches[0];
     const newIcon = {
@@ -56,6 +57,11 @@ const Mapa = () => {
     //alert(`${newIcon.icon.type.name} fue soltado en (${newIcon.x}, ${newIcon.y}) con el icono: (${newIcon.icon.type.name})`);
     setShowDialog(true); // Mostrar el diálogo al soltar el ícono
     //alert(showDialog);
+  };
+
+  const handleTouchMove = (event) => {
+    event.preventDefault(); // Evita el comportamiento predeterminado del desplazamiento en dispositivos táctiles
+    // Puedes implementar lógica adicional si deseas realizar acciones mientras el ícono se mueve
   };
 
   return (
