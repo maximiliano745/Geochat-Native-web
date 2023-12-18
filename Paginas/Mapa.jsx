@@ -6,26 +6,63 @@ import { AiFillWarning } from "react-icons/ai";
 // import { IoWarningOutline } from "react-icons/io5";
 import FormDialog from './FormularioDialog';
 import { TiHome } from "react-icons/ti";
+//import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
+import ThreeDRotation from '@mui/icons-material/AccessibilityNew';
+
 
 const Mapa = () => {
 
   const [iconCoords, setIconCoords] = useState({ x: 0, y: -100 });
   const [droppedIcons, setDroppedIcons] = useState([]);
   const [showDialog, setShowDialog] = useState(false); // Estado para mostrar el diálogo
-
   const { width: deviceWidth } = Dimensions.get('window');
-
-
-  let lon = -57.9023753;
-  let lat = -34.8874779;
+  // const [lon, setLon] = useState(null);
+  // const [lat, setLat] = useState(null);
+  
+  let lon=-57.9023753;
+  let lat=-34.8874779;
 
   useEffect(() => {
+    // const email = localStorage.getItem('email');
+    // if (email === 'maxiargento745@gmail.com') {
+    //   setLon(+(-57.9023753));
+    //   setLat(+(-34.8874779));
+    // } else {
+    //   navigator.geolocation.getCurrentPosition(success, error, options);
+    // }
+
     const mapDiv = document.querySelector('.leaflet-container');
     if (mapDiv) {
       const { top, right } = mapDiv.getBoundingClientRect();
       setIconCoords({ x: right, y: top });
     }
-  }, []);
+  }, []); // El efecto se ejecuta una sola vez al montar el componente
+
+
+  function success(pos) {
+    const crd = pos.coords;
+    const newLat = parseFloat(`${crd.latitude}`);
+    const newLon = parseFloat(`${crd.longitude}`);
+  
+    console.log(newLat, newLon);
+  
+    // Actualizar los estados de lon y lat
+    setLon(newLon);
+    setLat(newLat);
+  
+    sessionStorage.setItem("lon", newLon);
+    sessionStorage.setItem("lat", newLat);
+  }
+  function error(err) {
+    console.warn(`ERROR: ${err}`);
+  }
+  
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+
 
   const iconsStyle = {
     position: 'fixed',
@@ -97,6 +134,22 @@ const Mapa = () => {
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+          {/* Agrega el ícono en la posición de lon y lat */}
+          {lat !== null && lon !== null && (
+            <ThreeDRotation
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 1000, // Asegúrate de que el ícono esté en la parte superior del mapa
+                fontSize: '4rem', // Tamaño más grande
+              }}
+              color='primary'
+            />
+          )}
+
       </MapContainer>
 
       <div style={iconsStyle}>
