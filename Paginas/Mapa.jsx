@@ -10,26 +10,20 @@ import { TiHome } from "react-icons/ti";
 import ThreeDRotation from '@mui/icons-material/AccessibilityNew';
 
 
-const Mapa = () => {
+const Mapa = ({lon, lat}) => {
 
   const [iconCoords, setIconCoords] = useState({ x: 0, y: -100 });
   const [droppedIcons, setDroppedIcons] = useState([]);
   const [showDialog, setShowDialog] = useState(false); // Estado para mostrar el diálogo
   const { width: deviceWidth } = Dimensions.get('window');
-  // const [lon, setLon] = useState(null);
-  // const [lat, setLat] = useState(null);
   
-  let lon=-57.9023753;
-  let lat=-34.8874779;
+  const email = localStorage.getItem('email');
+  if (email === 'maxiargento745@gmail.com') {
+    lon = +(-57.9023753);
+    lat = -34.8874779;
+  }
 
   useEffect(() => {
-    // const email = localStorage.getItem('email');
-    // if (email === 'maxiargento745@gmail.com') {
-    //   setLon(+(-57.9023753));
-    //   setLat(+(-34.8874779));
-    // } else {
-    //   navigator.geolocation.getCurrentPosition(success, error, options);
-    // }
 
     const mapDiv = document.querySelector('.leaflet-container');
     if (mapDiv) {
@@ -39,29 +33,6 @@ const Mapa = () => {
   }, []); // El efecto se ejecuta una sola vez al montar el componente
 
 
-  function success(pos) {
-    const crd = pos.coords;
-    const newLat = parseFloat(`${crd.latitude}`);
-    const newLon = parseFloat(`${crd.longitude}`);
-  
-    console.log(newLat, newLon);
-  
-    // Actualizar los estados de lon y lat
-    setLon(newLon);
-    setLat(newLat);
-  
-    sessionStorage.setItem("lon", newLon);
-    sessionStorage.setItem("lat", newLat);
-  }
-  function error(err) {
-    console.warn(`ERROR: ${err}`);
-  }
-  
-  const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-  };
 
 
   const iconsStyle = {
@@ -89,6 +60,7 @@ const Mapa = () => {
     setDroppedIcons((prevIcons) => [...prevIcons, newIcon]);
     setShowDialog(true); // Mostrar el diálogo al soltar el ícono
   };
+  
   const handleTouchStart = (event, draggedIcon) => {
     const touch = event.touches[0];
     const newIcon = {

@@ -10,9 +10,9 @@ import { Button } from '@mui/material';
 export default function FormDialog({ open: showDialog, onClose }) {
   const [openDialog, setOpenDialog] = useState(showDialog);
 
-  const handleClose = () => {
+  const handleClose = (confirmed: boolean) => {
     setOpenDialog(false);
-    onClose(); // Llamada a la función onClose para actualizar el estado en el componente padre
+    onClose(confirmed); // Llamada a la función onClose para actualizar el estado en el componente padre
   };
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function FormDialog({ open: showDialog, onClose }) {
   }, [showDialog]);
 
   return (
-    <Dialog open={openDialog} onClose={handleClose}>
+    <Dialog open={openDialog} onClose={() => handleClose(false)}>
       <DialogTitle>Confirmacion</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -37,8 +37,10 @@ export default function FormDialog({ open: showDialog, onClose }) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancela</Button>
-        <Button onClick={handleClose}>Confirma</Button>
+        {/* <Button onClick={handleClose}>Cancela</Button>
+        <Button onClick={handleClose}>Confirma</Button> */}
+        <Button onClick={() => handleClose(false)}>Cancela</Button>
+        <Button onClick={() => handleClose(true)}>Confirma</Button>
       </DialogActions>
     </Dialog>
   );
