@@ -9,12 +9,22 @@ import { Button } from '@mui/material';
 
 export default function FormDialog({ open: showDialog, onClose }) {
   const [openDialog, setOpenDialog] = useState(showDialog);
+  const [iconDescription, setIconDescription] = useState('');
 
   const handleClose = (confirmed: boolean) => {
+    
+    if (!iconDescription && confirmed) {
+      alert('Debe ingresar una descripción del icono.');
+      return;
+    }
+  
     setOpenDialog(false);
     onClose(confirmed); // Llamada a la función onClose para actualizar el estado en el componente padre
+    
+      setIconDescription(''); // Restablecer a una cadena vacía si se confirma
+  
   };
-
+  
   useEffect(() => {
     setOpenDialog(showDialog);
   }, [showDialog]);
@@ -34,6 +44,8 @@ export default function FormDialog({ open: showDialog, onClose }) {
           type="text"
           fullWidth
           variant="standard"
+          value={iconDescription}
+          onChange={(e) => setIconDescription(e.target.value)}
         />
       </DialogContent>
       <DialogActions>
