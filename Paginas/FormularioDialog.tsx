@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
 
-export default function FormDialog({ open: showDialog, onClose }) {
+export default function FormDialog({ open: showDialog, onClose, selectedIcon }) {
   const [openDialog, setOpenDialog] = useState(showDialog);
   const [iconDescription, setIconDescription] = useState('');
 
@@ -19,15 +19,17 @@ export default function FormDialog({ open: showDialog, onClose }) {
     }
   
     setOpenDialog(false);
-    onClose(confirmed); // Llamada a la función onClose para actualizar el estado en el componente padre
+    onClose(confirmed, iconDescription); // Llamada a la función onClose para actualizar el estado en el componente padre
     
       setIconDescription(''); // Restablecer a una cadena vacía si se confirma
   
   };
   
   useEffect(() => {
+    setIconDescription('');
     setOpenDialog(showDialog);
   }, [showDialog]);
+
 
   return (
     <Dialog open={openDialog} onClose={() => handleClose(false)}>
@@ -40,7 +42,7 @@ export default function FormDialog({ open: showDialog, onClose }) {
           autoFocus
           margin="dense"
           id="name"
-          label="Alerta"
+          label={selectedIcon}
           type="text"
           fullWidth
           variant="standard"
