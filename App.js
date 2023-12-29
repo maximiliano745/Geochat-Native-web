@@ -77,7 +77,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/mapa" element={<Mapa lon={lon} lat={lat} />} />
+        <Route path="/mapa" element={<Mapa/>} />
 
       </Routes>
     </Router>

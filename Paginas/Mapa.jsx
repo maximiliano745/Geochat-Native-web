@@ -8,7 +8,7 @@ import { TiHome } from "react-icons/ti";
 import ThreeDRotation from '@mui/icons-material/AccessibilityNew';
 
 
-const Mapa = ({ lon, lat }) => {
+const Mapa = () => {
 
   const [iconCoords, setIconCoords] = useState({ x: 0, y: -100 });
   const [droppedIcons, setDroppedIcons] = useState([]);
@@ -19,20 +19,30 @@ const Mapa = ({ lon, lat }) => {
 
   const [acepta, setAcepta] = useState(false);
 
-  const email = localStorage.getItem('email');
-  if (email === 'maxiargento745@gmail.com') {
-    lon = +(-57.9023753);
-    lat = -34.8874779;
-  }
+
+  let lon;
+  let lat;
+
 
   useEffect(() => {
 
     const mapDiv = document.querySelector('.leaflet-container');
+    const email = localStorage.getItem('email');
+
+    if (email === 'maxiargento745@gmail.com') {
+      lon = +(-57.9023753);
+      lat = -34.8874779;
+    }else{
+      lon=+sessionStorage.getItem('lon');
+      lat=+sessionStorage.getItem('lat');
+  
+    }
+      
     if (mapDiv) {
       const { top, right } = mapDiv.getBoundingClientRect();
       setIconCoords({ x: right, y: top });
     }
-  }, []); // El efecto se ejecuta una sola vez al montar el componente
+  }, [lon, lat]); // El efecto se ejecuta una sola vez al montar el componente
 
   useEffect(() => {
     if (!showDialog2) {
@@ -117,7 +127,6 @@ const Mapa = ({ lon, lat }) => {
 
   const handleSaveToDatabase = (confirmed, iconDescription) => {
     if (confirmed) {
-      alert('aca se guarda');
       userId = localStorage.getItem('id');
       if (selectedIcon === 'Alerta') {
         // Guardar en la tabla Alertas: descripción de la alerta, id de quien la hizo, ubicación (lat, lon)
@@ -128,6 +137,7 @@ const Mapa = ({ lon, lat }) => {
           latitud: convertirCoordenadaYALat(icon.y), // Convertir la coordenada y a latitud
           longitud: convertirCoordenadaXALon(icon.x), // Convertir la coordenada x a longitud
         };
+        alert('aca se guarda Lon,Lat: '+lon+"  "+lat+ "   ---   "+alertData.latitud+"  "+alertData.longitud);
         // Lógica para guardar en la tabla Alertas utilizando algún método o API
 
       } else if (selectedIcon === 'Vivienda') {
@@ -142,9 +152,10 @@ const Mapa = ({ lon, lat }) => {
           longitud: convertirCoordenadaXALon(icon.x), // Convertir la coordenada x a longitud
           esContacto: esContacto,
         };
+        alert('aca se guarda Lon,Lat: '+lon+"  "+lat+ "   ---   "+viviendaData.latitud+"  "+viviendaData.longitud);
+
         // Lógica para guardar en la tabla Vivienda utilizando algún método o API
       }
-
     }
 
   };
