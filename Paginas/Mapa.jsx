@@ -37,7 +37,9 @@ const Mapa = ({lon, lat}) => {
       lon=+sessionStorage.getItem('lom');
       lat=+sessionStorage.getItem('lat');
     }
-    console.log(lon,lat);
+    alert(lon);
+    alert(lon);
+
     const mapDiv = document.querySelector('.leaflet-container');
     if (mapDiv) {
       const { top, right } = mapDiv.getBoundingClientRect();
