@@ -4,6 +4,7 @@ import Login from './Paginas/Login';
 import Register from './Paginas/Register';
 import Mapa from './Paginas/Mapa'
 
+
 // useEffect(() => {
 //     const socket = io(`wss://geochat-efn9.onrender.com/api/v2/users/join?roomID=${roomID}`); // Coloca la URL de tu servidor de WebSockets
 
@@ -36,7 +37,17 @@ const App = () => {
   const [lon, setLon] = useState(null);
   const [lat, setLat] = useState(null);
 
-  function success(pos) {
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+      // Manejar el caso en que la geolocalización no esté disponible
+    }
+  }
+  
+
+  const success = (pos) => {
     const crd = pos.coords;
     const newLat = parseFloat(`${crd.latitude}`);
     const newLon = parseFloat(`${crd.longitude}`);
@@ -46,9 +57,9 @@ const App = () => {
     setLon(newLon);
     setLat(newLat);
 
-    sessionStorage.setItem("lon", newLon);
-    sessionStorage.setItem("lat", newLat);
-  }
+    sessionStorage.setItem('lon', newLon.toString());
+    sessionStorage.setItem('lat', newLat.toString());
+  };
 
   function error(err) {
     console.warn(`ERROR: ${err}`);
@@ -61,11 +72,10 @@ const App = () => {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(success, error, options);
-    
-    setLon(+sessionStorage.getItem('lon'));
-    setLat(+sessionStorage.getItem('lat'));
-  }, [lon,lat]); // Ejecutar una vez al montar el componente
+    if (lon === null || lat === null) {
+      getLocation();
+    }
+  }, [lon, lat]);
 
   
   return (
@@ -73,8 +83,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/mapa" element={<Mapa lon={lon} lat={lat} />} />
-
+        <Route path="/mapa" element={<Mapa lon={Number(lon)} lat={Number(lat)} />}
+        />
       </Routes>
     </Router>
   );
