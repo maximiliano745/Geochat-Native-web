@@ -53,16 +53,23 @@ const App = () => {
     const crd = pos.coords;
     const newLat = parseFloat(`${crd.latitude}`);
     const newLon = parseFloat(`${crd.longitude}`);
-
+  
     console.log(newLat, newLon);
-
+  
+  // Verificar si newLon o newLat son null después de calcularlos
+  if (newLon === null || isNaN(newLon) || newLat === null || isNaN(newLat)) {
+    console.log('Las coordenadas son nulas o inválidas, volviendo a calcular.');
+    getLocation(); // Volver a obtener las coordenadas
+  } else {
+    // Si newLon y newLat son válidos, actualizar los estados y el sessionStorage
     setLon(newLon);
     setLat(newLat);
-
     sessionStorage.setItem('lon', newLon.toString());
     sessionStorage.setItem('lat', newLat.toString());
-  };
+  }
 
+  };
+  
   function error(err) {
     console.warn(`ERROR: ${err}`);
   }
