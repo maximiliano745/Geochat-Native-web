@@ -33,13 +33,17 @@ const Mapa = ({lon, lat}) => {
 
   useEffect(() => {
 
-    
+    if(lon===0 || lat===0){
+      lon=+sessionStorage.getItem('lom');
+      lat=+sessionStorage.getItem('lat');
+    }
+    console.log(lon,lat);
     const mapDiv = document.querySelector('.leaflet-container');
     if (mapDiv) {
       const { top, right } = mapDiv.getBoundingClientRect();
       setIconCoords({ x: right, y: top });
     }
-  }, [lon,lat]); // El efecto se ejecuta una sola vez al montar el componente
+  }, []); // El efecto se ejecuta una sola vez al montar el componente
 
   useEffect(() => {
     if (!showDialog2) {
