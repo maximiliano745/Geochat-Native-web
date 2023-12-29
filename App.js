@@ -62,22 +62,15 @@ const App = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, error, options);
-  }, []); // Ejecutar una vez al montar el componente
+  }, [lon,lat]); // Ejecutar una vez al montar el componente
 
-  useEffect(() => {
-    // Esto se ejecutará cada vez que lon o lat cambien
-    console.log('lon o lat han cambiado:', lon, lat);
-    // Realiza las acciones que deseas cuando lon o lat cambien
-    sessionStorage.setItem("lon", lon);
-    sessionStorage.setItem("lat", lat);
-  }, [lon, lat]); // Se suscribe a los cambios de lon o lat
-
+  
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/mapa" element={<Mapa/>} />
+        <Route path="/mapa" element={<Mapa lon={lon} lat={lat} />} />
 
       </Routes>
     </Router>
