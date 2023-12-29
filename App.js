@@ -12,55 +12,58 @@ const App = () => {
 
   const [lon, setLon] = useState(null);
   const [lat, setLat] = useState(null);
-
-
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error, options);
-      console.log("Geolocation supported by this browser.");
-
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-      // Manejar el caso en que la geolocalización no esté disponible
+ 
+  useEffect(() => {
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          success,
+          error,
+          options,
+          { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
+        console.log("Geolocation supported by this browser.");
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+        // Manejar el caso en que la geolocalización no esté disponible
+      }
     }
-  }
 
+    function success(pos) {
+      const crd = pos.coords;
+      const newLat = crd.latitude;
+      const newLon = crd.longitude;
 
-  const success = (pos) => {
-    const crd = pos.coords;
-    const newLat = parseFloat(`${crd.latitude}`);
-    const newLon = parseFloat(`${crd.longitude}`);
+      console.log(newLat, newLon);
+
+      setLon(newLon);
+      setLat(newLat);
+
+      sessionStorage.setItem('lon', newLon);
+      sessionStorage.setItem('lat', newLat);
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
   
-    console.log(newLat, newLon);
   
-    sessionStorage.setItem('lon',newLon );
-    sessionStorage.setItem('lat',newLat);
     const storedLon = sessionStorage.getItem('lon');
     const storedLat = sessionStorage.getItem('lat');
-    const llon=parseFloat(storedLon);
-    const llat=parseFloat(storedLat);
-    sessionStorage.setItem('lon',llon);
-    sessionStorage.setItem('lat', llat);
-    setLon(llon);
-    setLat(llat);
-    
 
-    
-  };
-  
-  function error(err) {
-    console.warn(`ERROR: ${err}`);
-  }
-
-  const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-  };
-
-  useEffect(() => {
-    getLocation();
-   }, []);
+    if (storedLon && storedLat) {
+      setLon(parseFloat(storedLon));
+      setLat(parseFloat(storedLat));
+    } else {
+      getLocation();
+    }
+  }, []);
 
 
   
@@ -69,7 +72,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/mapa" element={<Mapa lon={Number(lon)} lat={Number(lat)} />} />
+        <Route path="/mapa" element={<Mapa lon={lon} lat={lat} />} />
       </Routes>
     </Router>
   );
