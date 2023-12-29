@@ -5,37 +5,14 @@ import Register from './Paginas/Register';
 import Mapa from './Paginas/Mapa'
 
 
-// useEffect(() => {
-//     const socket = io(`wss://geochat-efn9.onrender.com/api/v2/users/join?roomID=${roomID}`); // Coloca la URL de tu servidor de WebSockets
-
-//     const clientId = 'ID-del-cliente'; // Aquí colocarías el ID del cliente de la aplicación nativa
-
-//     // Escuchar un evento específico desde la aplicación web
-//     socket.on('evento-desde-aplicacion-web', (data) => {
-//       // Verificar si el ID recibido coincide con el ID del cliente de la aplicación nativa
-//       if (data.clientId === clientId) {
-//         // Realizar acciones específicas en la aplicación nativa cuando se recibe el evento
-//         console.log('Evento recibido desde la aplicación web:', data);
-//         // Ejecutar la lógica correspondiente, como unir al usuario a una sala de chat
-//         // o realizar otras acciones necesarias.
-//       }
-//     });
-
-//     return () => {
-//       // Desconectar el socket al desmontar el componente
-//       socket.disconnect();
-//     };
-//   }, []);
-
-
 
 
 
 const App = () => {
 
-  
   const [lon, setLon] = useState(null);
   const [lat, setLat] = useState(null);
+
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -47,7 +24,7 @@ const App = () => {
       // Manejar el caso en que la geolocalización no esté disponible
     }
   }
-  
+
 
   const success = (pos) => {
     const crd = pos.coords;
@@ -56,18 +33,18 @@ const App = () => {
   
     console.log(newLat, newLon);
   
-  // Verificar si newLon o newLat son null después de calcularlos
-  if (newLon === null || isNaN(newLon) || newLat === null || isNaN(newLat)) {
-    console.log('Las coordenadas son nulas o inválidas, volviendo a calcular.');
-    getLocation(); // Volver a obtener las coordenadas
-  } else {
-    // Si newLon y newLat son válidos, actualizar los estados y el sessionStorage
-    setLon(newLon);
-    setLat(newLat);
-    sessionStorage.setItem('lon', newLon.toString());
-    sessionStorage.setItem('lat', newLat.toString());
-  }
+    sessionStorage.setItem('lon',newLon );
+    sessionStorage.setItem('lat',newLat);
+    const storedLon = sessionStorage.getItem('lon');
+    const storedLat = sessionStorage.getItem('lat');
+    const llon=parseFloat(storedLon);
+    const llat=parseFloat(storedLat);
 
+    setLon(llon);
+    setLat(llat);
+    
+
+    
   };
   
   function error(err) {
@@ -81,10 +58,9 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (lon === null || lat === null) {
-      getLocation();
-    }
-  }, [lon, lat]);
+    getLocation();
+   }, []);
+
 
   
   return (
@@ -92,8 +68,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/mapa" element={<Mapa lon={Number(lon)} lat={Number(lat)} />}
-        />
+        <Route path="/mapa" element={<Mapa lon={Number(lon)} lat={Number(lat)} />} />
       </Routes>
     </Router>
   );

@@ -8,7 +8,7 @@ import { TiHome } from "react-icons/ti";
 import ThreeDRotation from '@mui/icons-material/AccessibilityNew';
 
 
-const Mapa = ({ lon, lat }) => {
+const Mapa = ({lon, lat}) => {
 
   const [iconCoords, setIconCoords] = useState({ x: 0, y: -100 });
   const [droppedIcons, setDroppedIcons] = useState([]);
@@ -19,25 +19,27 @@ const Mapa = ({ lon, lat }) => {
 
   const [acepta, setAcepta] = useState(false);
 
+  
+
+
+
   // const email = localStorage.getItem('email');
   // if (email === 'maxiargento745@gmail.com') {
   //   lon = +(-57.9023753);
   //   lat = -34.8874779;
   // }
 
+ 
+
   useEffect(() => {
-    alert(lon);
-    alert(lat);
-    if (lon==0 || lat==0){
-      lon=+sessionStorage.getItem('lon');
-      lat=+sessionStorage.getItem('lat');
-    }
+
+    
     const mapDiv = document.querySelector('.leaflet-container');
     if (mapDiv) {
       const { top, right } = mapDiv.getBoundingClientRect();
       setIconCoords({ x: right, y: top });
     }
-  }, []); // El efecto se ejecuta una sola vez al montar el componente
+  }, [lon,lat]); // El efecto se ejecuta una sola vez al montar el componente
 
   useEffect(() => {
     if (!showDialog2) {
@@ -174,7 +176,7 @@ const Mapa = ({ lon, lat }) => {
         <FormDialog open={showDialog} onClose={(confirmed, iconDescription) => {
           setShowDialog(false);
           setShowDialog2(confirmed); // Actualiza showDialog2 con el valor confirmado
-          if (acepta){
+          if (acepta) {
             handleSaveToDatabase(confirmed, iconDescription);
             setAcepta(false);
           }
