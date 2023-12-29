@@ -39,7 +39,7 @@ const App = () => {
 
   function getLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
+      navigator.geolocation.getCurrentPosition(success, error), options;
     } else {
       console.log("Geolocation is not supported by this browser.");
       // Manejar el caso en que la geolocalización no esté disponible
