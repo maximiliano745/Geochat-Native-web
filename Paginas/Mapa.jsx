@@ -26,7 +26,6 @@ const Mapa = ({ lon, lat }) => {
   // }
 
   useEffect(() => {
-
     const mapDiv = document.querySelector('.leaflet-container');
     if (mapDiv) {
       const { top, right } = mapDiv.getBoundingClientRect();

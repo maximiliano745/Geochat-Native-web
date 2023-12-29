@@ -62,6 +62,9 @@ const App = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, error, options);
+    
+    setLon(+sessionStorage.getItem('lon'));
+    setLat(+sessionStorage.getItem('lat'));
   }, [lon,lat]); // Ejecutar una vez al montar el componente
 
   
