@@ -26,6 +26,10 @@ const Mapa = ({ lon, lat }) => {
   // }
 
   useEffect(() => {
+    if (lon === null || lat === null) {
+      lon=+(sessionStorage.getItem('lon'));
+      lat=+(sessionStorage.getItem('lat'));
+    }
     const mapDiv = document.querySelector('.leaflet-container');
     if (mapDiv) {
       const { top, right } = mapDiv.getBoundingClientRect();
