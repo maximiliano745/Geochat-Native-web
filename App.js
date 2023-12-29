@@ -17,10 +17,10 @@ const App = () => {
   function getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error, options);
-      alert("Geolocation supported by this browser.");
+      console.log("Geolocation supported by this browser.");
 
     } else {
-      alert("Geolocation is not supported by this browser.");
+      console.log("Geolocation is not supported by this browser.");
       // Manejar el caso en que la geolocalización no esté disponible
     }
   }
@@ -39,7 +39,8 @@ const App = () => {
     const storedLat = sessionStorage.getItem('lat');
     const llon=parseFloat(storedLon);
     const llat=parseFloat(storedLat);
-
+    sessionStorage.setItem('lon',llon);
+    sessionStorage.setItem('lat', llat);
     setLon(llon);
     setLat(llat);
     
